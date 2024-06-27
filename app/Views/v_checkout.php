@@ -27,22 +27,6 @@
             <label for="kabkota" class="form-label">Kab/Kota</label>
             <select class="form-select" id="kabupaten">
                 <option>Silahkan Pilih Kab/Kota</option>
-
-    <script>
-        $(document).ready(function() {
-            $('#provinsi').change(function() {
-                var province_id = $(this).val();
-                $.ajax({
-                    url: 'get_kabupaten.php', // URL ke file PHP untuk mendapatkan data kabupaten
-                    method: 'POST',
-                    data: {province_id: province_id},
-                    success: function(data) {
-                        $('#kabupaten').html(data);
-                    }
-                });
-            });
-        });
-    </script>
             </select>
         </div>
         <div class="col-12">
@@ -106,7 +90,6 @@
     </div>
 </div>
 <?= $this->endSection() ?>
-
 <?= $this->section('script') ?>
 <script>
     $('document').ready(function() {

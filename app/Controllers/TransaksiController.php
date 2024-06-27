@@ -2,18 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Models\TransactionModel;
+use App\Models\TransactionDetailModel;
+
 class TransaksiController extends BaseController
 {
     protected $cart;
     protected $url = "https://api.rajaongkir.com/starter/";
-    protected $apiKey = "ae4b0421f38dd6cd9ae8bc74a55b76e1";
+    protected $apiKey = "824675a7a903c740f77232a9926a4c4f";
     protected $transaction;
     protected $transaction_detail;
+
     function __construct()
     {
         helper('number');
         helper('form');
         $this->cart = \Config\Services::cart();
+        $this->transaction = new TransactionModel();
+        $this->transaction_detail = new TransactionDetailModel();
     }
 
     public function index()
@@ -70,6 +76,7 @@ class TransaksiController extends BaseController
         $data['total'] = $this->cart->total();
         $provinsi = $this->rajaongkir('province');
 				$data['provinsi'] = json_decode($provinsi)->rajaongkir->results;
+
 
         return view('v_checkout', $data);
     }
