@@ -24,28 +24,57 @@ class ProdukController extends BaseController
     }
 
     public function create()
-    {
-        $dataFoto = $this->request->getFile('foto');
+{
+    // Define validation rules
+    $validationRules = [
+        'nama' => 'required|min_length[6]',
+        'harga' => 'required|numeric',
+        'jumlah' => 'required|numeric'
+    ];
 
-        $dataForm = [
-            'nama' => $this->request->getPost('nama'),
-            'harga' => $this->request->getPost('harga'),
-            'jumlah' => $this->request->getPost('jumlah'),
-            'created_at' => date("Y-m-d H:i:s")
-        ];
+    // Validate the input
+    if (!$this->validate($validationRules)) {
+        // If validation fails, redirect back with input and error messages
+        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    }
 
-        if ($dataFoto->isValid()) {
-            $fileName = $dataFoto->getRandomName();
-            $dataForm['foto'] = $fileName;
-            $dataFoto->move('img/', $fileName);
-        }
+    // Proceed if validation passes
+    $dataFoto = $this->request->getFile('foto');
 
-        $this->product->insert($dataForm);
+    $dataForm = [
+        'nama' => $this->request->getPost('nama'),
+        'harga' => $this->request->getPost('harga'),
+        'jumlah' => $this->request->getPost('jumlah'),
+        'created_at' => date("Y-m-d H:i:s")
+    ];
 
-        return redirect('produk')->with('success', 'Data Berhasil Ditambah');
-    } 
+    if ($dataFoto->isValid() && !$dataFoto->hasMoved()) {
+        $fileName = $dataFoto->getRandomName();
+        $dataForm['foto'] = $fileName;
+        $dataFoto->move('img/', $fileName);
+    }
+
+    $this->product->insert($dataForm);
+
+    return redirect('produk')->with('success', 'Data Berhasil Ditambah');
+}
+
     public function edit($id)
     {
+        // Define validation rules
+    $validationRules = [
+        'nama' => 'required|min_length[6]',
+        'harga' => 'required|numeric',
+        'jumlah' => 'required|numeric'
+    ];
+
+    // Validate the input
+    if (!$this->validate($validationRules)) {
+        // If validation fails, redirect back with input and error messages
+        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    }
+
+    // Proceed if validation passes
         $dataProduk = $this->product->find($id);
 
         $dataForm = [

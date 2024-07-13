@@ -21,6 +21,9 @@ $routes->group('produk',['filter' => 'auth'], function ($routes) {
     $routes->get('download', 'ProdukController::download');
 });
 
+$routes->post('update_status', 'TransaksiController::updateStatus');
+$routes->get('download', 'TransaksiController::download');
+
 $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
     $routes->get('', 'TransaksiController::index');
     $routes->post('', 'TransaksiController::cart_add');
@@ -38,8 +41,10 @@ $routes->get('keranjang', 'TransaksiController::index', ['filter' => 'auth']);
 
 $routes->get('faq', 'Home::faq', ['filter' => 'auth']);
 $routes->get('profile', 'Home::profile', ['filter' => 'auth']);
+$routes->get('transaksi', 'Home::transaksi', ['filter' => 'auth']);
 $routes->get('contact', 'Home::contact', ['filter' => 'auth']);
 
 $routes->group('api', function ($routes) {
     $routes->post('monthly', 'ApiController::monthly');
+    $routes->post('yearly', 'ApiController::yearly');
 });

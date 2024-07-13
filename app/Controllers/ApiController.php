@@ -134,4 +134,40 @@ class ApiController extends ResourceController
 
     return $this->respond($data);
 }
+public function yearly()
+{
+    $data = [
+        'query' => [],
+        'results' => [],
+        'status' => ["code" => 401, "description" => "Unauthorized"]
+    ];
+
+    $headers = $this->request->headers();
+    $postData = $this->request->getPost();
+
+    $data['query'] = $postData;
+
+    array_walk($headers, function (&$value, $key) {
+        $value = $value->getValue();
+    });
+
+    if ($headers["Key"] == $this->apiKey) {
+        if ($postData['type'] == 'transaction') {
+            $result = $this->transaction->select('COUNT(*) as jml')->like('created_at', '' . $postData['tahun'] . '', 'after')->first();
+            $data['results'] = 4;
+            $data['status'] = ["code" => 200, "description" => "OK"];
+        } elseif ($postData['type'] == 'earning') {
+            $result = $this->transaction->select('SUM(total_harga) as jml')->like('created_at', '' . $postData['tahun'] . '', 'after')->first();
+            $data['results'] = $result;
+            $data['status'] = ["code" => 200, "description" => "OK"];
+        } elseif ($postData['type'] == 'user') {
+            $result = $this->user->select('COUNT(*) as jml')->like('created_at', '' . $postData['tahun'] . '', 'after')->first();
+            $data['results'] = $result;
+            $data['status'] = ["code" => 200, "description" => "OK"];
+        }
+    }
+
+    return $this->respond($data);
+}
+
 }

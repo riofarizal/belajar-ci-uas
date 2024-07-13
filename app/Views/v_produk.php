@@ -21,9 +21,30 @@ if (session()->getFlashData('failed')) {
 <?php
 }
 ?>
+
+<?php if (session()->getFlashData('failed')): ?>
+    <div class="col-12 alert alert-danger" role="alert">
+        <hr>
+        <p class="mb-0">
+            <?= session()->getFlashData('failed') ?>
+        </p>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->getFlashData('errors')): ?>
+    <div class="col-12 alert alert-danger" role="alert" >
+        <ul>
+            <?php foreach (session()->getFlashData('errors') as $error): ?>
+                <li><?= esc($error) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
     Tambah Data
 </button>
+
 <a type="button" class="btn btn-success" href="<?=base_url() ?>produk/download">
     Download Data
 </a>
@@ -52,14 +73,14 @@ if (session()->getFlashData('failed')) {
                         <img src="<?php echo base_url() . "img/" . $produk['foto'] ?>" width="100px">
                     <?php endif; ?>
                 </td>
-                <td>
-                   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal-<?= $produk['id'] ?>">
-    Ubah
-</button>
-<a href="<?= base_url('produk/delete/' . $produk['id']) ?>" class="btn btn-danger" onclick="return confirm('Yakin hapus data ini ?')">
-    Hapus
-</a>
-                </td>
+<td>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal-<?= $produk['id'] ?>">
+        Ubah
+    </button>
+    <a href="<?= base_url('produk/delete/' . $produk['id']) ?>" class="btn btn-danger" onclick="return confirm('Yakin hapus data ini ?')">
+       Hapus
+    </a>
+</td>
             </tr>
             <!-- Edit Modal Begin -->
 <div class="modal fade" id="editModal-<?= $produk['id'] ?>" tabindex="-1">
