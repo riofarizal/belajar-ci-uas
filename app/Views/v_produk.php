@@ -22,24 +22,17 @@ if (session()->getFlashData('failed')) {
 }
 ?>
 
-<?php if (session()->getFlashData('failed')): ?>
-    <div class="col-12 alert alert-danger" role="alert">
-        <hr>
-        <p class="mb-0">
-            <?= session()->getFlashData('failed') ?>
-        </p>
-    </div>
-<?php endif; ?>
-
 <?php if (session()->getFlashData('errors')): ?>
-    <div class="col-12 alert alert-danger" role="alert" >
+    <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
         <ul>
             <?php foreach (session()->getFlashData('errors') as $error): ?>
                 <li><?= esc($error) ?></li>
             <?php endforeach; ?>
         </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
+
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
     Tambah Data
