@@ -57,7 +57,6 @@ class Home extends BaseController
 
     $data['product'] = $product;
 // echo $data;
-echo "mausk";
     return view('v_profile', $data);
 }
 
@@ -83,7 +82,6 @@ echo "mausk";
 
     $data['product'] = $product;
 // echo $data;
-echo "mausk";
     return view('v_transaksi', $data);
 }
 
