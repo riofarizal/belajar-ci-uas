@@ -33,11 +33,10 @@ $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
 });
 
 $routes->get('checkout', 'TransaksiController::checkout', ['filter' => 'auth']);
-$routes->get('getcity', 'TransaksiController::getcity', ['filter' => 'auth']);
-$routes->get('getcost', 'TransaksiController::getcost', ['filter' => 'auth']);
-$routes->post('buy', 'TransaksiController::buy', ['filter' => 'auth']);
 
-$routes->get('keranjang', 'TransaksiController::index', ['filter' => 'auth']);
+$routes->get('get-location', 'TransaksiController::getLocation', ['filter' => 'auth']);
+$routes->get('get-cost', 'TransaksiController::getCost', ['filter' => 'auth']);
+$routes->get('transaksi/searchKelurahan', 'TransaksiController::searchKelurahan');
 
 $routes->get('faq', 'Home::faq', ['filter' => 'auth']);
 $routes->get('profile', 'Home::profile', ['filter' => 'auth']);
